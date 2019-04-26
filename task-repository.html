@@ -1,0 +1,183 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="task-repository">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+
+  <script>
+    /**
+     * `task-repository`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TaskRepository extends Polymer.Element {
+      constructor() {
+        super();
+        this.tasks = [{
+            id: 1,
+            title: 'Task 1',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 2,
+            title: 'Task 2',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 3,
+            title: 'Task 3',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 4,
+            title: 'Task 4',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 5,
+            title: 'Task 5',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 6,
+            title: 'Task 6',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 7,
+            title: 'Task 7',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 8,
+            title: 'Task 8',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 9,
+            title: 'Task 9',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 10,
+            title: 'Task 10',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 11,
+            title: 'Task 11',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 12,
+            title: 'Task 12',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 13,
+            title: 'Task 13',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 14,
+            title: 'Task 14',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 15,
+            title: 'Task 15',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 16,
+            title: 'Task 16',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 17,
+            title: 'Task 17',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 18,
+            title: 'Task 18',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 19,
+            title: 'Task 19',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 20,
+            title: 'Task 20',
+            canceled: false,
+            done: false
+          }
+        ];
+        this.offset = this.random(0, (this.tasks.length - 1));
+        this.pageSize = this.random(0, (this.tasks.length - 1));
+        this.getPage();
+      }
+      static get is() {
+        return 'task-repository';
+      }
+      static get properties() {
+        return {};
+      }
+      getPage() {
+        setTimeout(() => {
+          let tasks = [];
+          let pageEvent = null;
+
+          tasks = this.tasks.slice(this.offset, this.pageSize);
+          pageEvent = new CustomEvent('page-event', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              tasks: tasks,
+              total: tasks.length,
+              offset: this.offset,
+              limit: this.pageSize
+            }
+          });
+          this.dispatchEvent(pageEvent);
+        }, 300);
+      }
+      random(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    }
+
+    window.customElements.define(TaskRepository.is, TaskRepository);
+  </script>
+</dom-module>
