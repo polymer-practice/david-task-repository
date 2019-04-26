@@ -142,21 +142,42 @@
             done: false
           }
         ];
-        this.offset = this.random(0, (this.tasks.length - 1));
-        this.pageSize = this.random(0, (this.tasks.length - 1));
-        this.getPage();
+        this.offset = 0;
+        this.pageSize = 0;
       }
       static get is() {
         return 'task-repository';
       }
       static get properties() {
-        return {};
+        return {
+          offset: {
+            type: Number,
+            value: this.offset
+          },
+          pageSize: {
+            type: Number,
+            value: this.pageSize
+          }          
+        };
       }
-      getPage() {
-        setTimeout(() => {
-          let tasks = [];
-          let pageEvent = null;
 
+      static get observers() {
+        return ['_onStateChange(offset, pageSize)']
+      }
+
+      static set setOffset(value) { 
+        this.offset = value;
+      }
+
+      getPage() {
+        let limit = this.tasks.length;
+        let tasks = [];
+        let pageEvent = null;
+
+        if (this.offset < 0) this.offset = 0;
+        if (this.pageSize > limit) this.pageSize = limit;
+
+        setTimeout(() => {
           tasks = this.tasks.slice(this.offset, this.pageSize);
           pageEvent = new CustomEvent('page-event', {
             bubbles: true,
@@ -171,6 +192,11 @@
           this.dispatchEvent(pageEvent);
         }, 300);
       }
+
+      _onStateChange(currValue, prevValue) {
+        this.getPage();
+      }
+
       random(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
