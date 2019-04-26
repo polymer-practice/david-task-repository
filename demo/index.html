@@ -22,14 +22,30 @@
       <h3>Basic task-repository demo</h3>
       <demo-snippet>
         <template>
-          <task-repository offset="4" page-size="10"></task-repository>
+          <task-repository offset="4" page-size="10" new-task="" update-task="" id="task-repository"></task-repository>
         </template>
       </demo-snippet>
     </div>
     <script>
       let root = document.querySelector('body');
+      let taskRepository = document.getElementById('task-repository');
+
+      let task1 = {
+        title: 'Task title samples',
+      };
+      let task2 = { title: 'Task title samples 222' };
+
+      taskRepository.setAttribute('new-task', JSON.stringify(task1));
+      taskRepository.setAttribute('update-task', 1, JSON.stringify(task2));
 
       root.addEventListener('page-event', e => {
+        console.log(e.detail);
+      });
+      root.addEventListener('task-created', e => {
+        console.log(e.detail);
+      });
+
+      root.addEventListener('task-updated', e => {
         console.log(e.detail);
       });
     

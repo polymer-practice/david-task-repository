@@ -142,8 +142,6 @@
             done: false
           }
         ];
-        this.offset = 0;
-        this.pageSize = 0;
       }
       static get is() {
         return 'task-repository';
@@ -157,15 +155,23 @@
           pageSize: {
             type: Number,
             value: this.pageSize
+          },
+          newTask: {
+            type: Object,
+            observer: '_addTask'
+          },
+          updateTask: {
+            type: Object,
+            observer: '_updateTask'
           }          
         };
       }
 
       static get observers() {
-        return ['_onStateChange(offset, pageSize)']
+        return ['_getPage(offset, pageSize)']
       }
 
-      getPage() {
+      _getPage() {
         let limit = this.tasks.length;
         let tasks = [];
         let pageEvent = null;
@@ -189,10 +195,56 @@
         }, 300);
       }
 
+      _addTask(task) {
+        let taskCreated = null;
+        this.tasks[this.tasks.length + 1] = this._createTask(task);
+        taskCreated = new CustomEvent('task-created', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            task: this.newTask,
+            description: 'New task created'
+          }
+        });
+        this.dispatchEvent(taskCreated);
+      }
+
+      _updateTask({ id, data } = {}) {
+        let taskUpdated = null;
+        let taskToUpdate = this.tasks[id];
+
+        if (taskToUpdate) {
+          for (key in values) {
+            if (taskToUpdate.hasOwnProperty(key) && key !== undefined) {
+              taskToUpdate[key] = key.value;
+            }
+          }
+        }
+
+        taskUpdated = new CustomEvent('task-updated', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            task: id,
+            description: 'Task updated'
+          }
+        });
+        this.dispatchEvent(taskUpdated);
+      }   
+
+      _createTask(id = (this.random(this.tasks.length, 1000)),
+                 title = 'Task',
+                 canceled = false, 
+                 done = false
+                 ) {
+                  
+                  return { id, title: `${title} ${id}`, canceled, done };
+                 }
+ 
       _onStateChange(currValue, prevValue) {
         this.getPage();
       }
-
+      
       random(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
