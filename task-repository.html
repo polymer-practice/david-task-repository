@@ -167,12 +167,12 @@
       }
 
       _getPage() {
-        let limit = this.tasks.length;
+        let total = this.tasks.length;
         let tasks = [];
         let pageEvent = null;
 
         if (this.offset < 0) this.offset = 0;
-        if (this.limit > limit) this.limit = limit;
+        if (this.limit > total) this.limit = total;
 
         setTimeout(() => {
           tasks = this.tasks.slice(this.offset, this.limit);
