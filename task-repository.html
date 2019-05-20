@@ -1,14 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <dom-module id="task-repository">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-  </template>
-
   <script>
     /**
      * `task-repository`
@@ -148,6 +140,10 @@
       }
       static get properties() {
         return {
+          tasks: {
+            type: Array,
+            value: []
+          },
           offset: {
             type: Number,
             value: this.offset
