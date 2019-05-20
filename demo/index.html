@@ -30,24 +30,25 @@
       let root = document.querySelector('body');
       let taskRepository = document.getElementById('task-repository');
 
-      let task1 = {
+      console.log(taskRepository.tasks);
+      /* let task1 = {
         title: 'Task title samples',
       };
       let task2 = { title: 'Task title samples 222' };
 
       taskRepository.setAttribute('new-task', JSON.stringify(task1));
-      taskRepository.setAttribute('update-task', 1, JSON.stringify(task2));
+      taskRepository.setAttribute('update-task', 1, JSON.stringify(task2));*/
 
       root.addEventListener('page-event', e => {
         console.log(e.detail);
       });
-      root.addEventListener('task-created', e => {
+      /*root.addEventListener('task-created', e => {
         console.log(e.detail);
       });
 
       root.addEventListener('task-updated', e => {
         console.log(e.detail);
-      });
+      });*/
     
     </script>
   </body>
