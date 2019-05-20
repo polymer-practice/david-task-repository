@@ -11,130 +11,132 @@
      * @demo demo/index.html
      */
     class TaskRepository extends Polymer.Element {
-      tasks = [{
-          id: 1,
-          title: 'Task 1',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 2,
-          title: 'Task 2',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 3,
-          title: 'Task 3',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 4,
-          title: 'Task 4',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 5,
-          title: 'Task 5',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 6,
-          title: 'Task 6',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 7,
-          title: 'Task 7',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 8,
-          title: 'Task 8',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 9,
-          title: 'Task 9',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 10,
-          title: 'Task 10',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 11,
-          title: 'Task 11',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 12,
-          title: 'Task 12',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 13,
-          title: 'Task 13',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 14,
-          title: 'Task 14',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 15,
-          title: 'Task 15',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 16,
-          title: 'Task 16',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 17,
-          title: 'Task 17',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 18,
-          title: 'Task 18',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 19,
-          title: 'Task 19',
-          canceled: false,
-          done: false
-        },
-        {
-          id: 20,
-          title: 'Task 20',
-          canceled: false,
-          done: false
-        }
-      ]
 
       constructor() {
         super();
+
+        this.tasks = [{
+            id: 1,
+            title: 'Task 1',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 2,
+            title: 'Task 2',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 3,
+            title: 'Task 3',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 4,
+            title: 'Task 4',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 5,
+            title: 'Task 5',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 6,
+            title: 'Task 6',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 7,
+            title: 'Task 7',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 8,
+            title: 'Task 8',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 9,
+            title: 'Task 9',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 10,
+            title: 'Task 10',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 11,
+            title: 'Task 11',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 12,
+            title: 'Task 12',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 13,
+            title: 'Task 13',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 14,
+            title: 'Task 14',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 15,
+            title: 'Task 15',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 16,
+            title: 'Task 16',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 17,
+            title: 'Task 17',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 18,
+            title: 'Task 18',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 19,
+            title: 'Task 19',
+            canceled: false,
+            done: false
+          },
+          {
+            id: 20,
+            title: 'Task 20',
+            canceled: false,
+            done: false
+          }
+        ];
+        this.limit = this.tasks.length;
       }
       static get is() {
         return 'task-repository';
@@ -143,7 +145,7 @@
         return {
           offset: {
             type: Number,
-            value: this.offset
+            value: 0
           },
           limit: {
             type: Number,
@@ -173,12 +175,12 @@
         if (this.limit > total) this.limit = total;
 
         setTimeout(() => {
-          tasks = this.tasks.slice(this.offset, this.limit);
+          tasks = this.tasks.splice(0, this.limit);
           pageEvent = new CustomEvent('page-event', {
             bubbles: true,
             composed: true,
             detail: {
-              tasks: JSON.stringify(tasks),
+              tasks: tasks,
               total: tasks.length,
               offset: this.offset,
               limit: this.limit
