@@ -152,9 +152,9 @@
             type: Number,
             value: this.offset
           },
-          pageSize: {
+          limit: {
             type: Number,
-            value: this.pageSize
+            value: this.limit
           },
           newTask: {
             type: Object,
@@ -168,7 +168,7 @@
       }
 
       static get observers() {
-        return ['_getPage(offset, pageSize)']
+        return ['_getPage(offset, limit)']
       }
 
       _getPage() {
@@ -177,10 +177,10 @@
         let pageEvent = null;
 
         if (this.offset < 0) this.offset = 0;
-        if (this.pageSize > limit) this.pageSize = limit;
+        if (this.limit > limit) this.limit = limit;
 
         setTimeout(() => {
-          tasks = this.tasks.slice(this.offset, this.pageSize);
+          tasks = this.tasks.slice(this.offset, this.limit);
           pageEvent = new CustomEvent('page-event', {
             bubbles: true,
             composed: true,
@@ -188,7 +188,7 @@
               tasks: tasks,
               total: tasks.length,
               offset: this.offset,
-              limit: this.pageSize
+              limit: this.limit
             }
           });
           this.dispatchEvent(pageEvent);
